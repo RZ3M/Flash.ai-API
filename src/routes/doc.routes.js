@@ -1,7 +1,7 @@
 const express = require('express');
 const Doc = require('../models/doc.model');
 const Flash = require('../models/flash.model');
-const User = require('../models/user.model'); 
+const User = require('../models/user.model');
 const auth = require('../middleware/auth.middleware');
 const router = express.Router();
 
@@ -90,7 +90,20 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(404).json({ message: 'Doc not found' });
     }
 
+    const user = await User.findById(doc.userId);
+    if (user) {
+      user.docs = user.docs.filter(docId => docId.toString() !== doc._id.toString());
+      await user.save();
+    }
+
     await deleteDocAndFlashCards(doc._id);
+
+    // Remove the document ID from the user's docs array
+    const user = await User.findById(doc.userId);
+    if (user) {
+      user.docs = user.docs.filter(docId => docId.toString() !== doc._id.toString());
+      await user.save();
+    }
     res.json({ message: 'Doc and associated flash cards deleted' });
   } catch (error) {
     res.status(500).json({ message: 'Could not delete doc', error: error.message });

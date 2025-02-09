@@ -4,35 +4,8 @@ const { extractTextFromFile } = require('./file-processing.service');
 // Initialize Google AI with your API key
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY);
 
-const createFlashCardPrompt = (content) => {
-  return `You are a flash card generation assistant. Your task is to analyze the content and create flash cards.
-  IMPORTANT: Your response must be a valid JSON object. Do not include any text before or after the JSON.
-  
-  Create the following types of flash cards where you best see fit make sure to cover all relevant topics and key points. Generate at minimum 5 cards.:
-  1. Multiple choice questions
-  2. Fill in the blank questions
-  3. Matching pairs
-
-  Each generated Card must be ranked by difficulty from 1-3 where 1 is the easiest and 3 is the hardest.
-
-  Use exactly this JSON structure and these keys:
-  {
-    "summary": "Brief summary of the content",
-    "flashCards": [
-      {
-        "type": "multiple_choice",
-        "question": "Question text",
-        "multipleChoice": {
-          "options": [
-            {"text": "Correct answer", "isCorrect": true},
-            {"text": "Wrong answer 1", "isCorrect": false},
-            {"text": "Wrong answer 2", "isCorrect": false},
-            {"text": "Wrong answer 3", "isCorrect": false}
-          ]
-        },
-        "difficulty": 2
-      },
-      {
+/*
+{
         "type": "fill_in_blank",
         "question": "Question with ___ blank",
         "answer": "correct answer",
@@ -49,6 +22,36 @@ const createFlashCardPrompt = (content) => {
         },
         "difficulty": 3
       }
+*/
+
+const createFlashCardPrompt = (content) => {
+  return `You are a flash card generation assistant. Your task is to analyze the content and create flash cards.
+  IMPORTANT: Your response must be a valid JSON object. Do not include any text before or after the JSON.
+  
+  Create Multiple choice questions flash cards where you best see fit make sure to cover all relevant topics and key points. Generate at minimum 5 cards.:
+
+  ONLY generate Multiple Choice.
+  Multiple choice cards must have exactly one correct answer and three incorrect answers.
+  Randomize the correct answer's position, make "isCorrect" fields random, do not leave it true at position 1 always.
+  Each generated Card must be ranked by difficulty from 1-3 where 1 is the easiest and 3 is the hardest.
+
+  Use exactly this JSON structure and these keys:
+  {
+    "summary": "Brief summary of the content",
+    "flashCards": [
+      {
+        "type": "multiple_choice",
+        "question": "Question text",
+        "multipleChoice": {
+          "options": [
+            {"text": "Correct answer", "isCorrect": false OR true},
+            {"text": "Wrong answer 1", "isCorrect": false OR true},
+            {"text": "Wrong answer 2", "isCorrect": false OR true},
+            {"text": "Wrong answer 3", "isCorrect": false OR true}
+          ]
+        },
+        "difficulty": 2
+      },
     ]
   }
 

@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 const Doc = require('../models/doc.model');
 const Flash = require('../models/flash.model');
 const auth = require('../middleware/auth.middleware');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
 
 // Validate user token and return user info
@@ -143,7 +144,7 @@ router.patch('/update', auth, async (req, res) => {
     const updateFields = {};
 
     // Validate and add fields if they exist
-    if (username !== undefined) {
+    if (username) {
       // Validate username format if needed
       if (username.length < 1) {
         return res.status(400).json({
@@ -154,7 +155,7 @@ router.patch('/update', auth, async (req, res) => {
       updateFields.username = username;
     }
 
-    if (email !== undefined) {
+    if (email) {
       // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
@@ -174,7 +175,7 @@ router.patch('/update', auth, async (req, res) => {
       updateFields.email = email;
     }
 
-    if (password !== undefined) {
+    if (password) {
       // Validate password strength if needed
       if (password.length < 1) {
         return res.status(400).json({
@@ -264,7 +265,7 @@ router.delete('/delete', auth, async (req, res) => {
 
     res.json({
       success: true,
-      message: 'User account and all associated data deleted successfully'
+      message: 'User account and all associated data deleted successfully',
     });
   } catch (error) {
     res.status(500).json({
