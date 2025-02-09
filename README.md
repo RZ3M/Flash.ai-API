@@ -19,7 +19,11 @@ This is the API for Flash.ai an ai app that automatically creates flashcards fro
    ```bash
    npm install
    ```
-
+3. Create a .env file and add the following variables:
+   - `MONGODB_URI=YOUR_MONGODB_URI`
+   - `GOOGLE_AI_API_KEY=YOUR_GOOGLE_AI_API_KEY`
+   - `JWT_SECRET=YOUR_SECRET_KEY`
+   
 ## Running the Project
    ```bash
    npm start
