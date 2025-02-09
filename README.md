@@ -1,13 +1,14 @@
-This is the API for Flash.ai an ai app that automatically creates flashcards from your notes!
-
 # Project Title
 Flash.ai API
 
 ## Description
 This is the API for Flash.ai an ai app that automatically creates flashcards from your notes!
 
-## Prerequisites
-- List any software or tools required (e.g., Node.js, Python, etc.).
+## Technologies
+- Node.js
+- Express.js
+- MongoDB
+- Google Generative AI
 
 ## Setup
 1. Clone the repository:
