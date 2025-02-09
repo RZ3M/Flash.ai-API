@@ -1,5 +1,4 @@
-# Project Title
-Flash.ai API
+# Flash.ai API
 
 ## Description
 This is the API for Flash.ai an ai app that automatically creates flashcards from your notes!
@@ -22,9 +21,9 @@ This is the API for Flash.ai an ai app that automatically creates flashcards fro
    ```
 
 ## Running the Project
-    ```bash
-    npm start
-    ```
+   ```bash
+   npm start
+   ```
 
 ## License
 - Please don't steal it.
